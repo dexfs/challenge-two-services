@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  states:
+    build: 
+      context: ./states
+      dockerfile: ../.docker/Dockerfile
+    volumes:
+    - $PWD/states:/usr/src/app
+    - $PWD/proto:/usr/src/proto
+    ports:
+    - "3124:3124"
+    command: nest start
+    working_dir: /app
+    networks: 
+      - junet
+    
+  population:
+    build: 
+      context: ./population
+      dockerfile: ../.docker/Dockerfile
+    volumes:
+    - $PWD/population:/usr/src/app
+    - $PWD/proto:/usr/src/proto
+    ports:
+    - "3123:3123"
+    command: nest start
+    working_dir: /app
+    networks: 
+    - junet
+      
+networks: 
+  junet: {}
